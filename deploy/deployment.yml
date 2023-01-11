@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: envoy-502-upe
+  name: envoy-502-upe
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: envoy-502-upe
+  template:
+    metadata:
+      labels:
+        app: envoy-502-upe
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: envoy-502-upe
+          image: dumlu/envoy-502-upe:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
+              name: http
+              protocol: TCP
